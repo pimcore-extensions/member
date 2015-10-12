@@ -1,0 +1,4 @@
+"plugin_member_install_successful","Member plugin installed successfully."
+"plugin_member_install_failed","Could not install Member plugin. See log for more details."
+"plugin_member_uninstall_successful","Successfully uninstalled Member plugin."
+"plugin_member_uninstall_failed","Could not uninstall Blog plugin. See log for more details."

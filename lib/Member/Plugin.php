@@ -2,52 +2,109 @@
 
 namespace Member;
 
+use Member\Plugin\Installer;
 use Pimcore\API\Plugin as PluginLib;
+use Pimcore\Model\Object\ClassDefinition;
 
 class Plugin extends PluginLib\AbstractPlugin implements PluginLib\PluginInterface
 {
-    public function init()
+    /**
+     * @var \Zend_Translate
+     */
+    protected static $_translate;
+
+    /**
+     * @return bool
+     */
+    public static function needsReloadAfterInstall()
     {
-        parent::init();
-
-        // register your events here
-
-        // using anonymous function
-        \Pimcore::getEventManager()->attach("document.postAdd", function ($event) {
-            // do something
-            $document = $event->getTarget();
-        });
-
-        // using methods
-        \Pimcore::getEventManager()->attach("document.postUpdate", array($this, "handleDocument"));
-
-        // for more information regarding events, please visit:
-        // http://www.pimcore.org/wiki/display/PIMCORE/Event+API+%28EventManager%29+since+2.1.1
-        // http://framework.zend.com/manual/1.12/de/zend.event-manager.event-manager.html
-        // http://www.pimcore.org/wiki/pages/viewpage.action?pageId=12124202
-    }
-
-    public function handleDocument($event)
-    {
-        // do something
-        $document = $event->getTarget();
+        return true;
     }
 
     public static function install()
     {
-        // implement your own logic here
-        return true;
+        try {
+            $installer = new Installer();
+
+            $installer->createObjectFolder('members');
+            $installer->createClass('Member');
+
+        } catch (\Exception $e) {
+            \Logger::crit($e);
+            self::uninstall(); // revert installation
+            return self::getTranslate()->_('plugin_member_install_failed');
+        }
+
+        return self::getTranslate()->_('plugin_member_install_successful');
     }
 
     public static function uninstall()
     {
-        // implement your own logic here
-        return true;
+        try {
+            $installer = new Installer();
+
+            $installer->removeObjectFolder('/members');
+            $installer->removeClass('Member');
+        } catch (\Exception $e) {
+            \Logger::crit($e);
+            return self::getTranslate()->_('plugin_member_uninstall_failed');
+        }
+
+        return self::getTranslate()->_('plugin_member_uninstall_successful');
     }
 
     public static function isInstalled()
     {
-        // implement your own logic here
-        return true;
+        $memberClass = ClassDefinition::getByName('Member');
+        if ($memberClass) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getTranslationFileDirectory()
+    {
+        return PIMCORE_PLUGINS_PATH . '/Member/static/texts';
+    }
+
+    /**
+     * @param string $language
+     * @return string path to the translation file relative to plugin directory
+     */
+    public static function getTranslationFile($language)
+    {
+        if (is_file(self::getTranslationFileDirectory() . "/$language.csv")) {
+            return "/Member/static/texts/$language.csv";
+        }
+
+        return '/Member/static/texts/en.csv';
+    }
+
+    /**
+     * @return \Zend_Translate
+     */
+    public static function getTranslate()
+    {
+        if (self::$_translate instanceof \Zend_Translate) {
+            return self::$_translate;
+        }
+
+        try {
+            $lang = \Zend_Registry::get('Zend_Locale')->getLanguage();
+        } catch (\Exception $e) {
+            $lang = 'en';
+        }
+
+        self::$_translate = new \Zend_Translate(
+            'csv',
+            PIMCORE_PLUGINS_PATH . self::getTranslationFile($lang),
+            $lang,
+            array('delimiter' => ',')
+        );
+
+        return self::$_translate;
     }
 }
