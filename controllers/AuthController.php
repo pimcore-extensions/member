@@ -49,4 +49,11 @@ class Member_AuthController extends Action
             $this->view->error = $error;
         }
     }
+
+    public function logoutAction()
+    {
+        $this->auth->clearIdentity();
+        // TODO routing configuration
+        $this->redirect('/member/login');
+    }
 }
