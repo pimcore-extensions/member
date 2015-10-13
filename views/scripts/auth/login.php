@@ -4,7 +4,9 @@
     <h3 class="title">
         <?= $this->translate('Login') ?>
         <?= $this->translate('or') ?>
-        <a href="#todo"><?= $this->translate('Sign up') ?></a>
+        <a href="<?= \Member\Plugin\Config::get('routes')->register ?>">
+            <?= $this->translate('Sign up') ?>
+        </a>
     </h3>
 
     <div class="row row-sm-offset-3 social">
@@ -37,7 +39,7 @@
 
     <div class="row row-sm-offset-3">
         <div class="col-xs-12 col-sm-6">
-            <form action="<?= $this->formAction ?>" method="post" autocomplete="off">
+            <form action="<?= $this->request->getRequestUri() ?>" method="post" autocomplete="off">
                 <div class="form-group <?= $this->error ? 'has-error' : '' ?>">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-fw fa-user"></i></span>

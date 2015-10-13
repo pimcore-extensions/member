@@ -10,16 +10,10 @@ class Member_AuthController extends Action
     public function loginAction()
     {
         if ($this->auth->hasIdentity()) {
-            // TODO routing configuration
-            $this->redirect('/member');
+            $this->redirect(Config::get('routes')->profile);
         }
 
-        $this->view->formAction = ($this->document)
-            ? $this->document->getFullPath()
-            : $this->_helper->url->url();
-
         if ($this->_request->isPost()) {
-            // TODO plugin configuration + management
             $adapter = new Adapter(Config::get('auth')->adapter);
             $adapter
                 ->setIdentity($this->_getParam('email'))
@@ -29,8 +23,11 @@ class Member_AuthController extends Action
 
             if ($result->isValid()) {
                 // TODO handle "remember me"
-                // TODO routing configuration
-                $this->redirect('/member');
+
+                if ($this->_getParam('back')) {
+                    $this->redirect($this->_getParam('back'));
+                }
+                $this->redirect(Config::get('routes')->profile);
             }
 
             switch ($result->getCode()) {
@@ -49,7 +46,6 @@ class Member_AuthController extends Action
     public function logoutAction()
     {
         $this->auth->clearIdentity();
-        // TODO routing configuration
-        $this->redirect('/member/login');
+        $this->redirect(Config::get('routes')->login);
     }
 }

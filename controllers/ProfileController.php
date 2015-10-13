@@ -8,10 +8,7 @@ class Member_ProfileController extends Action
 {
     public function defaultAction()
     {
-        if (!\Zend_Auth::getInstance()->hasIdentity()) {
-            // TODO routing configuration
-            $this->redirect('/member/login');
-        }
+        $this->_helper->member->requireAuth();
 
         $this->view->member = $this->auth->getIdentity();
     }

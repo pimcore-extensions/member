@@ -7,4 +7,10 @@
             <objectPath>/members</objectPath>
         </adapter>
     </auth>
+    <routes>
+        <login>/member/login</login>
+        <logout>/member/logout</logout>
+        <register>/member/register</register>
+        <profile>/member</profile>
+    </routes>
 </zend-config>

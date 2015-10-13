@@ -13,6 +13,13 @@ class Plugin extends PluginLib\AbstractPlugin implements PluginLib\PluginInterfa
      */
     protected static $_translate;
 
+    public function init()
+    {
+        parent::init();
+
+        \Zend_Controller_Action_HelperBroker::addPrefix('Member_Controller_Action_Helper');
+    }
+
     /**
      * @return bool
      */
