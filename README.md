@@ -24,12 +24,12 @@ Fork, hack & have fun! **Pull requests are more than welcome!** :)
 ### Controller helper
 
 * Get current logged member object (null if not logged):  
-```php
-$this->_helper->member()
-```
+    ```php
+    $this->_helper->member()
+    ```
 
 * Force login in controller's action:
-```php
-$this->_helper->member->requireAuth();
-```
-This will automatically redirect user to configured login page.
+    ```php
+    $this->_helper->member->requireAuth();
+    ```
+    This will automatically redirect user to configured login page.
