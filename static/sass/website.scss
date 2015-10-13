@@ -1,0 +1,80 @@
+$color-btn-text: #fff !default;
+$color-facebook: #3b5998 !default;
+$color-twitter: #00aced !default;
+$color-google: #c32f10 !default;
+$screen-sm-min: 768px !default;
+
+@media (min-width: $screen-sm-min) {
+  .row-sm-offset-3 {
+    :first-child[class*="col-"] {
+      margin-left: 25%;
+    }
+  }
+
+  .forgot-pwd {
+    text-align: right;
+    margin-top: 10px;
+  }
+}
+
+.member_login {
+  .title {
+    text-align: center;
+    line-height: 300%;
+  }
+
+  .social {
+    .btn {
+      color: $color-btn-text;
+    }
+
+    .btn-facebook {
+      background-color: $color-facebook;
+      &:hover, &:focus, &:active {
+        background-color: darken($color-facebook, 5%);
+      }
+    }
+
+    .btn-twitter {
+      background-color: $color-twitter;
+      &:hover, &:focus, &:active {
+        background-color: darken($color-twitter, 5%);
+      }
+    }
+
+    .btn-google {
+      background-color: $color-google;
+      &:hover, &:focus, &:active {
+        background-color: darken($color-google, 5%);
+      }
+    }
+  }
+
+  .login-or {
+    position: relative;
+    font-size: 1.5em;
+    color: #aaa;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+
+    hr {
+      background-color: #cdcdcd;
+      height: 1px;
+      margin-top: 0 !important;
+      margin-bottom: 0 !important;
+    }
+
+    .text {
+      display: block;
+      position: absolute;
+      left: 50%;
+      top: -0.6em;
+      margin-left: -1.5em;
+      background-color: #fff;
+      width: 3em;
+      text-align: center;
+    }
+  }
+}
