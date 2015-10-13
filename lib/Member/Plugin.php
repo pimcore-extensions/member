@@ -24,8 +24,9 @@ class Plugin extends PluginLib\AbstractPlugin implements PluginLib\PluginInterfa
     public static function install()
     {
         try {
-            $installer = new Installer();
+            $installer = new Installer(PIMCORE_PLUGINS_PATH . '/Member/install');
 
+            $installer->createConfig('member');
             $installer->createObjectFolder('members');
             $installer->createClass('Member');
             $installer->addClassmap('Object_Member', '\\Member');
@@ -42,11 +43,12 @@ class Plugin extends PluginLib\AbstractPlugin implements PluginLib\PluginInterfa
     public static function uninstall()
     {
         try {
-            $installer = new Installer();
+            $installer = new Installer(PIMCORE_PLUGINS_PATH . '/Member/install');
 
             $installer->removeObjectFolder('/members');
             $installer->removeClass('Member');
             $installer->removeClassmap('Object_Member');
+            $installer->removeConfig('member');
 
         } catch (\Exception $e) {
             \Logger::crit($e);

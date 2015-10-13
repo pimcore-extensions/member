@@ -1,0 +1,10 @@
+<zend-config>
+    <auth>
+        <adapter>
+            <identityClassname>Object\Member</identityClassname>
+            <identityColumn>email</identityColumn>
+            <credentialColumn>password</credentialColumn>
+            <objectPath>/members</objectPath>
+        </adapter>
+    </auth>
+</zend-config>

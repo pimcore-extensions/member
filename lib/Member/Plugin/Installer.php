@@ -12,7 +12,14 @@ class Installer
     /**
      * @var User
      */
-    protected $_user;
+    protected $user;
+
+    protected $baseDir;
+
+    public function __construct($baseDir)
+    {
+        $this->baseDir = $baseDir;
+    }
 
     /**
      * @param string $name
@@ -21,7 +28,7 @@ class Installer
      */
     public function createClass($name)
     {
-        $def = file_get_contents(PIMCORE_PLUGINS_PATH . "/Member/install/class_$name.json");
+        $def = file_get_contents(sprintf('%s/class_%s.json', $this->baseDir, $name));
         $conf = json_decode($def, true);
         $layoutDefinitions = ClassDefinition\Service::generateLayoutTreeFromArray(
             $conf['layoutDefinitions']
@@ -123,15 +130,37 @@ class Installer
         }
     }
 
+    public function createConfig($name)
+    {
+        $src = sprintf('%s/config.xml', $this->baseDir);
+        $dest = sprintf('%s/plugins/%s/config.xml', PIMCORE_WEBSITE_VAR, $name);
+        if (!is_dir(dirname($dest))) {
+            if (!@mkdir(dirname($dest), 0777, true)) {
+                throw new \Exception('Unable to create plugin config directory');
+            }
+        }
+
+        if (!@copy($src, $dest)) {
+            throw new \Exception('Unable to copy plugin config');
+        }
+    }
+
+    public function removeConfig($name)
+    {
+        $dest = PIMCORE_WEBSITE_VAR . '/plugins/' . $name . '/config.xml';
+        @unlink($dest);
+        @rmdir(basename($dest));
+    }
+
     /**
      * @return User
      */
     protected function getUser()
     {
-        if (!$this->_user) {
-            $this->_user = \Zend_Registry::get('pimcore_admin_user');
+        if (!$this->user) {
+            $this->user = \Zend_Registry::get('pimcore_admin_user');
         }
 
-        return $this->_user;
+        return $this->user;
     }
 }

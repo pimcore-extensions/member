@@ -44,15 +44,19 @@ class Adapter implements \Zend_Auth_Adapter_Interface
     /**
      * Constructor
      *
-     * @param  array $config Configuration settings example:
+     * @param \Zend_Config|array $config Configuration settings example:
      *    'identityClassname' => '\\Pimcore\\Model\\Object\\Member'
      *    'identityColumn' => 'email'
      *    'credentialColumn' => 'password'
      *    'objectPath' => '/members'
      * @throws \Zend_Auth_Adapter_Exception
      */
-    public function __construct(array $config)
+    public function __construct($config)
     {
+        if ($config instanceof \Zend_Config) {
+            $config = $config->toArray();
+        }
+
         $options = ['identityClassname', 'identityColumn', 'credentialColumn', 'objectPath'];
         foreach ($options as $option) {
             if (!empty($config[$option])) {

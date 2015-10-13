@@ -2,6 +2,7 @@
 
 use Member\Auth\Adapter;
 use Member\Controller\Action;
+use Member\Plugin\Config;
 use Pimcore\Model\Object\Member;
 
 class Member_AuthController extends Action
@@ -19,12 +20,7 @@ class Member_AuthController extends Action
 
         if ($this->_request->isPost()) {
             // TODO plugin configuration + management
-            $adapter = new Adapter([
-                'identityClassname' => '\\Pimcore\\Model\\Object\\Member',
-                'identityColumn' => 'email',
-                'credentialColumn' => 'password',
-                'objectPath' => '/members',
-            ]);
+            $adapter = new Adapter(Config::get('auth')->adapter);
             $adapter
                 ->setIdentity($this->_getParam('email'))
                 ->setCredential($this->_getParam('password'));
