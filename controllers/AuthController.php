@@ -15,7 +15,7 @@ class Member_AuthController extends Action
 
         $this->view->formAction = ($this->document)
             ? $this->document->getFullPath()
-            : $this->_helper->url([]);
+            : $this->_helper->url->url();
 
         if ($this->_request->isPost()) {
             // TODO plugin configuration + management

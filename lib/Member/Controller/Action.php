@@ -12,6 +12,11 @@ class Action extends WebsiteAction
      */
     protected $auth;
 
+    /**
+     * @var \Pimcore\Translate\Website
+     */
+    protected $translate;
+
     public function init()
     {
         parent::init();
@@ -31,5 +36,6 @@ class Action extends WebsiteAction
         );
 
         $this->auth = \Zend_Auth::getInstance();
+        $this->translate = $this->initTranslation();
     }
 }
