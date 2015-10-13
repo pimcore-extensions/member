@@ -13,6 +13,6 @@ class Member_ProfileController extends Action
             $this->redirect('/member/login');
         }
 
-        // TODO profile page
+        $this->view->member = $this->auth->getIdentity();
     }
 }
