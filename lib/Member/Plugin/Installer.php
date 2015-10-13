@@ -90,6 +90,39 @@ class Installer
         }
     }
 
+    public function addClassmap($from, $to)
+    {
+        $classmapXml = PIMCORE_CONFIGURATION_DIRECTORY . '/classmap.xml';
+        try {
+            $conf = new \Zend_Config_Xml($classmapXml);
+            $classmap = $conf->toArray();
+        } catch (\Exception $e) {
+            $classmap = array();
+        }
+        $classmap[$from] = $to;
+        $writer = new \Zend_Config_Writer_Xml(array(
+            'config' => new \Zend_Config($classmap),
+            'filename' => $classmapXml
+        ));
+        $writer->write();
+    }
+
+    public function removeClassmap($from)
+    {
+        $classmapXml = PIMCORE_CONFIGURATION_DIRECTORY . '/classmap.xml';
+        try {
+            $conf = new \Zend_Config_Xml($classmapXml);
+            $classmap = $conf->toArray();
+            unset($classmap[$from]);
+            $writer = new \Zend_Config_Writer_Xml(array(
+                'config' => new \Zend_Config($classmap),
+                'filename' => $classmapXml
+            ));
+            $writer->write();
+        } catch (\Exception $e) {
+        }
+    }
+
     /**
      * @return User
      */

@@ -28,6 +28,7 @@ class Plugin extends PluginLib\AbstractPlugin implements PluginLib\PluginInterfa
 
             $installer->createObjectFolder('members');
             $installer->createClass('Member');
+            $installer->addClassmap('Object_Member', '\\Member');
 
         } catch (\Exception $e) {
             \Logger::crit($e);
@@ -45,6 +46,8 @@ class Plugin extends PluginLib\AbstractPlugin implements PluginLib\PluginInterfa
 
             $installer->removeObjectFolder('/members');
             $installer->removeClass('Member');
+            $installer->removeClassmap('Object_Member');
+
         } catch (\Exception $e) {
             \Logger::crit($e);
             return self::getTranslate()->_('plugin_member_uninstall_failed');
