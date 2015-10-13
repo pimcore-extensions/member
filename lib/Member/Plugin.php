@@ -18,6 +18,10 @@ class Plugin extends PluginLib\AbstractPlugin implements PluginLib\PluginInterfa
         parent::init();
 
         \Zend_Controller_Action_HelperBroker::addPrefix('Member_Controller_Action_Helper');
+
+        // attach default listeners
+        \Pimcore::getEventManager()->attach('member.register.validate',
+            ['\\Member\\Listener\\Register', 'validate'], 0);
     }
 
     /**
