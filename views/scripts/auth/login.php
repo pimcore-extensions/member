@@ -37,9 +37,8 @@
 
     <div class="row row-sm-offset-3">
         <div class="col-xs-12 col-sm-6">
-            <form class="omb_loginForm" action="<?= $this->formAction ?>"
-                  autocomplete="off" method="post">
-                <div class="form-group has-error">
+            <form action="<?= $this->formAction ?>" method="post" autocomplete="off">
+                <div class="form-group <?= $this->error ? 'has-error' : '' ?>">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-fw fa-user"></i></span>
                         <input type="email" class="form-control" name="email"
@@ -47,7 +46,7 @@
                     </div>
                 </div>
 
-                <div class="form-group has-error">
+                <div class="form-group <?= $this->error ? 'has-error' : '' ?>">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-fw fa-lock"></i></span>
                         <input type="password" class="form-control" name="password"
@@ -55,9 +54,11 @@
                     </div>
                 </div>
 
+                <?php if ($this->error): ?>
                 <div class="form-group has-error">
-                    <span class="help-block">Wrong email or password</span>
+                    <span class="help-block"><?= $this->error ?></span>
                 </div>
+                <?php endif; ?>
 
                 <button class="btn btn-lg btn-primary btn-block" type="submit">
                     <?= $this->translate('Login') ?>

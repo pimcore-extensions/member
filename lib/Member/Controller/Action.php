@@ -2,10 +2,16 @@
 
 namespace Member\Controller;
 
+use Member;
 use Website\Controller\Action as WebsiteAction;
 
 class Action extends WebsiteAction
 {
+    /**
+     * @var \Zend_Auth
+     */
+    protected $auth;
+
     public function init()
     {
         parent::init();
@@ -23,5 +29,7 @@ class Action extends WebsiteAction
                 )
             )
         );
+
+        $this->auth = \Zend_Auth::getInstance();
     }
 }

@@ -8,22 +8,45 @@ class Member_AuthController extends Action
 {
     public function loginAction()
     {
-//        $this->view->formAction = ($this->document)
-//            ? $this->document->getFullPath()
-//            : $this->_helper->url([]);
-//
-//        // reachable via http://your.domain/plugin/Member/index/index
-//        $authAdapter = new Adapter([
-//            'identityClassname' => '\\Pimcore\\Model\\Object\\Member',
-//            'identityColumn' => 'email',
-//            'credentialColumn' => 'password',
-//            'objectPath' => '/members',
-//        ]);
-//        $authAdapter->setIdentity('test@test.pl')->setCredential('test');
-//
-//        $auth = Zend_Auth::getInstance();
-//        $result = $auth->authenticate($authAdapter);
-//        var_dump('auth is valid? ', $result->isValid());
-//        var_dump($auth->getIdentity());
+        if ($this->auth->hasIdentity()) {
+            // TODO routing configuration
+            $this->redirect('/member');
+        }
+
+        $this->view->formAction = ($this->document)
+            ? $this->document->getFullPath()
+            : $this->_helper->url([]);
+
+        if ($this->_request->isPost()) {
+            // TODO plugin configuration + management
+            $adapter = new Adapter([
+                'identityClassname' => '\\Pimcore\\Model\\Object\\Member',
+                'identityColumn' => 'email',
+                'credentialColumn' => 'password',
+                'objectPath' => '/members',
+            ]);
+            $adapter
+                ->setIdentity($this->_getParam('email'))
+                ->setCredential($this->_getParam('password'));
+
+            $result = $this->auth->authenticate($adapter);
+
+            if ($result->isValid()) {
+                // TODO handle "remember me"
+                // TODO routing configuration
+                $this->redirect('/member');
+            }
+
+            switch ($result->getCode()) {
+                case \Zend_Auth_Result::FAILURE_CREDENTIAL_INVALID:
+                case \Zend_Auth_Result::FAILURE_IDENTITY_NOT_FOUND:
+                    $error = $this->translate->_('Wrong email or password');
+                    break;
+                default:
+                    $error = $this->translate->_('Unexpected error occurred');
+                    break;
+            }
+            $this->view->error = $error;
+        }
     }
 }
