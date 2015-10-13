@@ -12,4 +12,8 @@ class Member_ProfileController extends Action
 
         $this->view->member = $this->auth->getIdentity();
     }
+
+    public function registerAction()
+    {
+    }
 }

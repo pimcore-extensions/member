@@ -1,33 +1,29 @@
+.btn-social {
+  color: #fff; }
+  .btn-social:hover, .btn-social:focus, .btn-social:active {
+    color: #fff; }
+
+.btn-facebook {
+  background-color: #3b5998; }
+  .btn-facebook:hover, .btn-facebook:focus, .btn-facebook:active {
+    background-color: #344e86; }
+
+.btn-twitter {
+  background-color: #00aced; }
+  .btn-twitter:hover, .btn-twitter:focus, .btn-twitter:active {
+    background-color: #0099d3; }
+
+.btn-google {
+  background-color: #c32f10; }
+  .btn-google:hover, .btn-google:focus, .btn-google:active {
+    background-color: #ab290e; }
+
 @media (min-width: 768px) {
-  .row-sm-offset-3 :first-child[class*="col-"] {
-    margin-left: 25%; }
   .forgot-pwd {
     text-align: right;
     margin-top: 10px; } }
 
-.member_login .title {
-  text-align: center;
-  line-height: 300%; }
-
-.member_login .social .btn {
-  color: #fff; }
-
-.member_login .social .btn-facebook {
-  background-color: #3b5998; }
-  .member_login .social .btn-facebook:hover, .member_login .social .btn-facebook:focus, .member_login .social .btn-facebook:active {
-    background-color: #344e86; }
-
-.member_login .social .btn-twitter {
-  background-color: #00aced; }
-  .member_login .social .btn-twitter:hover, .member_login .social .btn-twitter:focus, .member_login .social .btn-twitter:active {
-    background-color: #0099d3; }
-
-.member_login .social .btn-google {
-  background-color: #c32f10; }
-  .member_login .social .btn-google:hover, .member_login .social .btn-google:focus, .member_login .social .btn-google:active {
-    background-color: #ab290e; }
-
-.member_login .login-or {
+.member .social-or {
   position: relative;
   font-size: 1.5em;
   color: #aaa;
@@ -35,16 +31,16 @@
   margin-bottom: 1em;
   padding-top: 0.5em;
   padding-bottom: 0.5em; }
-  .member_login .login-or hr {
+  .member .social-or hr {
     background-color: #cdcdcd;
     height: 1px;
     margin-top: 0 !important;
     margin-bottom: 0 !important; }
-  .member_login .login-or .text {
+  .member .social-or .text {
     display: block;
     position: absolute;
     left: 50%;
-    top: -0.6em;
+    top: -0.2em;
     margin-left: -1.5em;
     background-color: #fff;
     width: 3em;
