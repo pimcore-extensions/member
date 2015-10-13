@@ -27,5 +27,5 @@ Fork, hack & have fun! **Pull requests are more than welcome!** :)
 ```$this->_helper->member() ```
 
 * Force login in controller's action:  
-```$this->_helper->member->requireAuth();```  
+```$this->_helper->member->requireAuth();```
 This will automatically redirect user to configured login page.
