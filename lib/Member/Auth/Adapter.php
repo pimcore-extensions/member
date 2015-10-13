@@ -237,7 +237,7 @@ class Adapter implements \Zend_Auth_Adapter_Interface
     {
         /** @var \Pimcore\Model\Object\ClassDefinition\Data\Password $credentialField */
         $credentialField = $identity->getClass()->getFieldDefinition($this->credentialColumn);
-        $hashed = $credentialField->getDataForResource($identity->{$this->credentialColumn});
+        $hashed = $credentialField->getDataForResource($this->credential);
 
         return $hashed === $identity->{$this->credentialColumn};
     }
