@@ -2,11 +2,29 @@
 
 namespace Member\Auth;
 
+use Pimcore\Model\Object\Concrete;
+use Pimcore\Model\Object\Listing;
+
 class Adapter implements \Zend_Auth_Adapter_Interface
 {
+    /**
+     * @var string
+     */
     protected $identityClassname;
+
+    /**
+     * @var string
+     */
     protected $identityColumn;
+
+    /**
+     * @var string
+     */
     protected $credentialColumn;
+
+    /**
+     * @var string
+     */
     protected $objectPath;
 
     /**
@@ -14,14 +32,14 @@ class Adapter implements \Zend_Auth_Adapter_Interface
      *
      * @var string
      */
-    protected $identity = null;
+    protected $identity;
 
     /**
-     * Credential values
+     * Credential value
      *
      * @var string
      */
-    protected $credential = null;
+    protected $credential;
 
     /**
      * Constructor
@@ -36,6 +54,94 @@ class Adapter implements \Zend_Auth_Adapter_Interface
     public function __construct(array $config)
     {
         $options = ['identityClassname', 'identityColumn', 'credentialColumn', 'objectPath'];
+        foreach ($options as $option) {
+            if (!empty($config[$option])) {
+                $setter = 'set' . ucfirst($option);
+                $this->$setter($config[$option]);
+            }
+        }
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIdentityClassname()
+    {
+        return $this->identityClassname;
+    }
+
+    /**
+     * @param mixed $identityClassname
+     * @return Adapter
+     * @throws \Exception
+     */
+    public function setIdentityClassname($identityClassname)
+    {
+        if (!class_exists($identityClassname)) {
+            throw new \Exception("Identity class '$identityClassname' not exist");
+        }
+
+        $obj = new $identityClassname();
+        if (!$obj instanceof Concrete) {
+            throw new \Exception('Identity class should be pimcore object');
+        }
+
+        $this->identityClassname = $identityClassname;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIdentityColumn()
+    {
+        return $this->identityColumn;
+    }
+
+    /**
+     * @param mixed $identityColumn
+     * @return Adapter
+     */
+    public function setIdentityColumn($identityColumn)
+    {
+        $this->identityColumn = $identityColumn;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCredentialColumn()
+    {
+        return $this->credentialColumn;
+    }
+
+    /**
+     * @param mixed $credentialColumn
+     * @return Adapter
+     */
+    public function setCredentialColumn($credentialColumn)
+    {
+        $this->credentialColumn = $credentialColumn;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getObjectPath()
+    {
+        return $this->objectPath;
+    }
+
+    /**
+     * @param mixed $objectPath
+     * @return Adapter
+     */
+    public function setObjectPath($objectPath)
+    {
+        $this->objectPath = $objectPath;
+        return $this;
     }
 
     /**
@@ -82,10 +188,57 @@ class Adapter implements \Zend_Auth_Adapter_Interface
      */
     public function authenticate()
     {
-        $code = \Zend_Auth_Result::FAILURE;
-        $identity = null;
-        $messages = [];
+        $optionsRequired = [
+            'identityClassname', 'identityColumn', 'credentialColumn', 'identity', 'credential'
+        ];
+        foreach ($optionsRequired as $optionRequired) {
+            if (empty($this->{$optionRequired})) {
+                throw new \Zend_Auth_Adapter_Exception(
+                    "Option '$optionRequired' must be set before authentication");
+            }
+        }
 
-        return new \Zend_Auth_Result($code, $identity, $messages);
+        $identities = $this->getIdentities();
+        if (count($identities) == 0) {
+            return new \Zend_Auth_Result(\Zend_Auth_Result::FAILURE_IDENTITY_NOT_FOUND, null);
+        }
+
+        if (count($identities) > 1) {
+            return new \Zend_Auth_Result(\Zend_Auth_Result::FAILURE_IDENTITY_AMBIGUOUS, null);
+        }
+
+        /** @var Concrete $identity */
+        $identity = $identities->current();
+        if (!$this->checkcredential($identity)) {
+            return new \Zend_Auth_Result(\Zend_Auth_Result::FAILURE_CREDENTIAL_INVALID, null);
+        }
+
+        return new \Zend_Auth_Result(\Zend_Auth_Result::SUCCESS, $identity);
+    }
+
+    /**
+     * @return Listing
+     */
+    protected function getIdentities()
+    {
+        $listClass = $this->getIdentityClassname() . '\\Listing';
+        /** @var Listing $list */
+        $list = new $listClass();
+        $list->addConditionParam($this->identityColumn . ' = ?', $this->identity);
+
+        if ($this->objectPath) {
+            $list->addConditionParam('o_path LIKE ?', $this->objectPath . '%');
+        }
+
+        return $list;
+    }
+
+    protected function checkcredential(Concrete $identity)
+    {
+        /** @var \Pimcore\Model\Object\ClassDefinition\Data\Password $credentialField */
+        $credentialField = $identity->getClass()->getFieldDefinition($this->credentialColumn);
+        $hashed = $credentialField->getDataForResource($identity->{$this->credentialColumn});
+
+        return $hashed === $identity->{$this->credentialColumn};
     }
 }
