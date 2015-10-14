@@ -65,9 +65,7 @@ class Member_ProfileController extends Action
         }
 
         $member = $list->current();
-        $member->setPublished(true);
-        $member->setConfirmHash(null);
-        $member->save();
+        $member->confirm();
 
         $this->_helper->flashMessenger([
             'type' => 'success',

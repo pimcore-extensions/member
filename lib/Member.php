@@ -9,7 +9,7 @@ class Member extends AbstractMember
     /**
      * @param array $data
      * @return \Zend_Filter_Input
-     * @throws Exception
+     * @throws \Exception
      */
     public function register(array $data)
     {
@@ -51,5 +51,17 @@ class Member extends AbstractMember
     public function createHash($algo = 'md5')
     {
         return hash($algo, $this->getId() . $this->getEmail() . mt_rand());
+    }
+
+    /**
+     * @return $this
+     */
+    public function confirm()
+    {
+        $this->setPublished(true);
+        $this->setConfirmHash(null);
+        $this->save();
+
+        return $this;
     }
 }
