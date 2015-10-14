@@ -45,6 +45,7 @@ class Register
                     return $v === $data['password'];
                 }),
                 'presence' => 'required',
+                'messages' => 'Password do not match'
             ],
         ], $data);
 

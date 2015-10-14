@@ -21,8 +21,9 @@ class Member_ProfileController extends Action
         }
 
         if ($this->_request->isPost()) {
+            $post = $this->_request->getPost();
             $member = new \Member();
-            $result = $member->register($this->_request->getPost());
+            $result = $member->register($post);
             var_dump($result->isValid(), $result->getUnescaped(), $result->getMessages());
 
             if ($result->isValid()) {
@@ -30,7 +31,7 @@ class Member_ProfileController extends Action
                 //$this->redirect(Config::get('routes')->login);
             }
 
-            $this->view->assign($result->getEscaped());
+            $this->view->assign(array_merge($post, $result->getEscaped()));
             $this->view->errors = $result->getMessages();
         }
     }
