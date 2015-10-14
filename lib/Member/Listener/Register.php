@@ -33,7 +33,7 @@ class Register
             ],
             'email' => [
                 'EmailAddress',
-                // TODO validate email presence withing existing members
+                'EmailExist',
                 'presence' => 'required',
             ],
             'agree' => [
@@ -51,7 +51,9 @@ class Register
                 'presence' => 'required',
                 'messages' => 'Password do not match'
             ],
-        ], $data);
+        ], $data, [
+            \Zend_Filter_Input::VALIDATOR_NAMESPACE => 'Member_Validate',
+        ]);
 
         return $input;
     }
