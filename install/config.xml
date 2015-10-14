@@ -12,6 +12,7 @@
         <logout>/member/logout</logout>
         <register>/member/register</register>
         <profile>/member</profile>
+        <confirm>/member/confirm</confirm>
     </routes>
     <emails>
         <registerConfirm>/member/emails/register-confirm</registerConfirm>

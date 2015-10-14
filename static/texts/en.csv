@@ -5,3 +5,5 @@
 "member_register_success","You account was created successfully and must be activated by site stuff."
 "member_register_success_activate","You account was created successfully. You can login with your email and password."
 "member_register_success_confirm","You account was created successfully. Check your email and confirm your account by clicking activation link."
+"member_confirm_link_invalid","Invalid confirmation link."
+"member_confirm_success","Your account is now active, you can login using email and password."

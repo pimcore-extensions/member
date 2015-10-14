@@ -1,5 +1,7 @@
 <?php
 
+use Member\Plugin\Config;
+use Pimcore\Model\Object\Folder;
 use Pimcore\Model\Object\Member as AbstractMember;
 
 class Member extends AbstractMember
@@ -30,8 +32,8 @@ class Member extends AbstractMember
             $this->setValues($input->getUnescaped());
             $this->setRole($this->getClass()->getFieldDefinition('role')->getDefaultValue());
             $this->setKey(str_replace('@', '_at_', $this->getEmail()));
-            $this->setParent(\Pimcore\Model\Object\Folder::getByPath(
-                '/' . ltrim(\Member\Plugin\Config::get('auth')->adapter->objectPath, '/')
+            $this->setParent(Folder::getByPath(
+                '/' . ltrim(Config::get('auth')->adapter->objectPath, '/')
             ));
             $this->save();
 
@@ -44,5 +46,10 @@ class Member extends AbstractMember
         }
 
         return $input;
+    }
+
+    public function createHash($algo = 'md5')
+    {
+        return hash($algo, $this->getId() . $this->getEmail() . mt_rand());
     }
 }

@@ -38,4 +38,29 @@ class Member_ProfileController extends Action
             $this->view->errors = $result->getMessages();
         }
     }
+
+    public function confirmAction()
+    {
+        $hash = trim($this->_getParam('hash'));
+        if (empty($hash)) {
+            $this->_helper->flashMessenger($this->translate->_('member_confirm_link_invalid'));
+            $this->redirect(Config::get('routes')->login);
+        }
+
+        $list = new Member\Listing();
+        $list->setUnpublished(true);
+        $list->setCondition('confirmHash = ?', $hash);
+        if (count($list) == 0) {
+            $this->_helper->flashMessenger($this->translate->_('member_confirm_link_invalid'));
+            $this->redirect(Config::get('routes')->login);
+        }
+
+        $member = $list->current();
+        $member->setPublished(true);
+        $member->setConfirmHash(null);
+        $member->save();
+
+        $this->_helper->flashMessenger($this->translate->_('member_confirm_success'));
+        $this->redirect(Config::get('routes')->login);
+    }
 }

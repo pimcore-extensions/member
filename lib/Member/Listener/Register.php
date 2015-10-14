@@ -80,8 +80,8 @@ class Register
     {
         /** @var \Member $member */
         $member = $event->getTarget();
-
-        // TODO generate and handle confirmation hash
+        $member->setConfirmHash($member->createHash());
+        $member->save();
 
         $doc = Email::getByPath(Config::get('emails')->registerConfirm);
         if (!$doc) {
