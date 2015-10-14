@@ -13,6 +13,7 @@
         <register>/member/register</register>
         <profile>/member</profile>
         <confirm>/member/confirm</confirm>
+        <passwordRemind>/member/password-remind</passwordRemind>
     </routes>
     <emails>
         <registerConfirm>/member/emails/register-confirm</registerConfirm>

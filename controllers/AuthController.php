@@ -48,4 +48,8 @@ class Member_AuthController extends Action
         $this->auth->clearIdentity();
         $this->redirect(Config::get('routes')->login);
     }
+
+    public function remindAction()
+    {
+    }
 }

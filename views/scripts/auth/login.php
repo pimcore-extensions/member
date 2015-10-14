@@ -49,8 +49,7 @@
             <form action="<?= $this->request->getRequestUri() ?>" method="post">
                 <div class="form-group <?= $this->error ? 'has-error' : '' ?>">
                     <div class="input-group">
-                                <span class="input-group-addon"><i
-                                        class="fa fa-fw fa-user"></i></span>
+                        <span class="input-group-addon"><i class="fa fa-fw fa-user"></i></span>
                         <input type="email" class="form-control input-lg" name="email"
                                placeholder="<?= $this->translate('Email') ?>">
                     </div>
@@ -58,8 +57,7 @@
 
                 <div class="form-group <?= $this->error ? 'has-error' : '' ?>">
                     <div class="input-group">
-                                <span class="input-group-addon"><i
-                                        class="fa fa-fw fa-lock"></i></span>
+                        <span class="input-group-addon"><i class="fa fa-fw fa-lock"></i></span>
                         <input type="password" class="form-control input-lg" name="password"
                                placeholder="<?= $this->translate('Password') ?>">
                     </div>
@@ -87,7 +85,9 @@
                 </div>
                 <div class="col-sm-6">
                     <p class="forgot-pwd">
-                        <a href="#todo"><?= $this->translate('Forgot password?') ?></a>
+                        <a href="<?= \Member\Plugin\Config::get('routes')->passwordRemind ?>">
+                            <?= $this->translate('Forgot password?') ?>
+                        </a>
                     </p>
                 </div>
             </div>
