@@ -22,7 +22,11 @@ class Member extends AbstractMember
             throw new \Exception('No validate listener attached to "member.register.validate" event');
         }
 
-        if ($input->isValid()) {
+        if (!$input->isValid()) {
+            return $input;
+        }
+
+        try {
             $this->setValues($input->getUnescaped());
             $this->setRole($this->getClass()->getFieldDefinition('role')->getDefaultValue());
             $this->setKey(str_replace('@', '_at_', $this->getEmail()));
@@ -32,6 +36,11 @@ class Member extends AbstractMember
             $this->save();
 
             \Pimcore::getEventManager()->trigger('member.register.post', $this);
+        } catch (\Exception $e) {
+            if ($this->getId()) {
+                $this->delete();
+            }
+            throw $e;
         }
 
         return $input;

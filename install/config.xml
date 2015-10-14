@@ -13,6 +13,9 @@
         <register>/member/register</register>
         <profile>/member</profile>
     </routes>
+    <emails>
+        <registerConfirm>/member/emails/register-confirm</registerConfirm>
+    </emails>
     <actions>
         <postRegister>activate</postRegister>
     </actions>

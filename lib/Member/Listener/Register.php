@@ -2,6 +2,10 @@
 
 namespace Member\Listener;
 
+use Member\Plugin\Config;
+use Pimcore\Mail;
+use Pimcore\Model\Document\Email;
+
 class Register
 {
     /**
@@ -66,6 +70,29 @@ class Register
         $member = $event->getTarget();
         $member->setPublished(true);
         $member->save();
+
+        return $member;
+    }
+
+    public static function confirm(\Zend_EventManager_Event $event)
+    {
+        /** @var \Member $member */
+        $member = $event->getTarget();
+
+        // TODO generate and handle confirmation hash
+
+        $doc = Email::getByPath(Config::get('emails')->registerConfirm);
+        if (!$doc) {
+            throw new \Exception('No confirmation email defined');
+        }
+
+        $email = new Mail();
+        $email->addTo($member->getEmail());
+        $email->setDocument($doc);
+        $email->setParams([
+            'member_id' => $member->getId(),
+        ]);
+        $email->send();
 
         return $member;
     }
