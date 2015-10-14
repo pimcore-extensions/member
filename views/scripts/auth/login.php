@@ -6,8 +6,8 @@
 
             <?php if (!empty($this->flashMessages)): ?>
                 <?php foreach($this->flashMessages as $message): ?>
-                    <div class="alert alert-success" role="alert">
-                        <?= $message ?>
+                    <div class="alert alert-<?= $message['type'] ?>" role="alert">
+                        <?= $message['text'] ?>
                     </div>
                 <?php endforeach; ?>
             <?php endif; ?>

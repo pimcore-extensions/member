@@ -30,7 +30,10 @@ class Member_ProfileController extends Action
                 if (Config::get('actions')->postRegister) {
                     $translationKey .= '_' . Config::get('actions')->postRegister;
                 }
-                $this->_helper->flashMessenger($this->translate->_($translationKey));
+                $this->_helper->flashMessenger([
+                    'type' => 'success',
+                    'text' => $this->translate->_($translationKey)
+                ]);
                 $this->redirect(Config::get('routes')->login);
             }
 
@@ -43,7 +46,10 @@ class Member_ProfileController extends Action
     {
         $hash = trim($this->_getParam('hash'));
         if (empty($hash)) {
-            $this->_helper->flashMessenger($this->translate->_('member_confirm_link_invalid'));
+            $this->_helper->flashMessenger([
+                'type' => 'danger',
+                'text' => $this->translate->_('member_confirm_link_invalid')
+            ]);
             $this->redirect(Config::get('routes')->login);
         }
 
@@ -51,7 +57,10 @@ class Member_ProfileController extends Action
         $list->setUnpublished(true);
         $list->setCondition('confirmHash = ?', $hash);
         if (count($list) == 0) {
-            $this->_helper->flashMessenger($this->translate->_('member_confirm_link_invalid'));
+            $this->_helper->flashMessenger([
+                'type' => 'danger',
+                'text' => $this->translate->_('member_confirm_link_invalid')
+            ]);
             $this->redirect(Config::get('routes')->login);
         }
 
@@ -60,7 +69,10 @@ class Member_ProfileController extends Action
         $member->setConfirmHash(null);
         $member->save();
 
-        $this->_helper->flashMessenger($this->translate->_('member_confirm_success'));
+        $this->_helper->flashMessenger([
+            'type' => 'success',
+            'text' => $this->translate->_('member_confirm_success')
+        ]);
         $this->redirect(Config::get('routes')->login);
     }
 }
