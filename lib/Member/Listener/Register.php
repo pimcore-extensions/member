@@ -51,4 +51,22 @@ class Register
 
         return $input;
     }
+
+    /**
+     * Callback for 'member.register.post' event.
+     * It simply activates member account after registration.
+     *
+     * @param \Zend_EventManager_Event $event
+     * @return \Member
+     * @throws \Exception
+     */
+    public static function activate(\Zend_EventManager_Event $event)
+    {
+        /** @var \Member $member */
+        $member = $event->getTarget();
+        $member->setPublished(true);
+        $member->save();
+
+        return $member;
+    }
 }

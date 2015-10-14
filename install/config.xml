@@ -13,4 +13,7 @@
         <register>/member/register</register>
         <profile>/member</profile>
     </routes>
+    <actions>
+        <postRegister>activate</postRegister>
+    </actions>
 </zend-config>

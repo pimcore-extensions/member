@@ -6,6 +6,10 @@
 
             <h2 class="text-center">
                 <?= $this->translate('Sign up') ?>
+                <?= $this->translate('or') ?>
+                <a href="<?= \Member\Plugin\Config::get('routes')->login ?>">
+                    <?= $this->translate('Login') ?>
+                </a>
             </h2>
 
             <div class="row social">

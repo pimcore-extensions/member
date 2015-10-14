@@ -2,6 +2,7 @@
 
 namespace Member;
 
+use Member\Plugin\Config;
 use Member\Plugin\Installer;
 use Pimcore\API\Plugin as PluginLib;
 use Pimcore\Model\Object\ClassDefinition;
@@ -22,6 +23,11 @@ class Plugin extends PluginLib\AbstractPlugin implements PluginLib\PluginInterfa
         // attach default listeners
         \Pimcore::getEventManager()->attach('member.register.validate',
             ['\\Member\\Listener\\Register', 'validate'], 0);
+
+        if (Config::get('actions')->postRegister) {
+            \Pimcore::getEventManager()->attach('member.register.post',
+                ['\\Member\\Listener\\Register', Config::get('actions')->postRegister], 0);
+        }
     }
 
     /**

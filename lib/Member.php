@@ -30,6 +30,7 @@ class Member extends AbstractMember
                 '/' . ltrim(\Member\Plugin\Config::get('auth')->adapter->objectPath, '/')
             ));
             $this->save();
+
             \Pimcore::getEventManager()->trigger('member.register.post', $this);
         }
 

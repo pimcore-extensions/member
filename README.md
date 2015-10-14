@@ -33,3 +33,18 @@ Fork, hack & have fun! **Pull requests are more than welcome!** :)
     $this->_helper->member->requireAuth();
     ```
     This will automatically redirect user to configured login page.
+
+### Event API
+
+Events can be used to hook into many functionalities. How to attach listeners you can find in
+[pimcore documentation](https://www.pimcore.org/wiki/pages/viewpage.action?pageId=14551652).
+
+* ```member.register.validate``` - allows to override validation of register form data.  
+    Your callback must return configured instance of ```\Zend_Filter_Input```.  
+    See ```\Member\Listener\Register::validate()``` for default implementation.
+* ```member.register.post``` - allows to define what should be done after member object was created. 
+    By default member object is published - which means that account is active and member
+    is able to login.  
+    There is also ```confirm``` callback implemented which sends confirmation link via email.  
+    If you remove ```postRegister``` action from ```config.xml``` members must be activated by admin.
+    
