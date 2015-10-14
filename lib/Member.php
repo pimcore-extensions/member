@@ -69,7 +69,7 @@ class Member extends AbstractMember
 
     public function requestPasswordReset()
     {
-        $this->setRemindHash($this->createHash());
+        $this->setResetHash($this->createHash());
         $this->save();
 
         $doc = Email::getByPath(Config::get('emails')->passwordReset);

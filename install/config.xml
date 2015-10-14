@@ -14,6 +14,7 @@
         <profile>/member</profile>
         <confirm>/member/confirm</confirm>
         <passwordRequest>/member/password-request</passwordRequest>
+        <passwordReset>/member/password-reset</passwordReset>
     </routes>
     <emails>
         <registerConfirm>/member/emails/register-confirm</registerConfirm>

@@ -59,13 +59,15 @@ class Member_AuthController extends Action
             $email = trim($this->_request->getPost('email'));
 
             if (!\Zend_Validate::is($email, 'EmailAddress')) {
-                $this->view->error = $this->translate->_('member_remind_email_invalid');
+                $this->view->error = $this->translate->_('member_password_request_email_invalid');
                 return;
             }
 
+            // TODO resend confirmation email if account is not active
+
             $list = \Member::getByEmail($email);
             if (count($list) == 0) {
-                $this->view->error = $this->translate->_('member_remind_email_not_exist');
+                $this->view->error = $this->translate->_('member_password_request_email_not_exist');
                 return;
             }
 
@@ -75,7 +77,19 @@ class Member_AuthController extends Action
 
             $this->_helper->flashMessenger([
                 'type' => 'success',
-                'text' => $this->translate->_('member_remind_success'),
+                'text' => $this->translate->_('member_password_request_success'),
+            ]);
+            $this->redirect(Config::get('routes')->login);
+        }
+    }
+
+    public function passwordResetAction()
+    {
+        $hash = trim($this->_getParam('hash'));
+        if (empty($hash)) {
+            $this->_helper->flashMessenger([
+                'type' => 'danger',
+                'text' => $this->translate->_('member_password_reset_link_invalid'),
             ]);
             $this->redirect(Config::get('routes')->login);
         }

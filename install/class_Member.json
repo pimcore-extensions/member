@@ -39,7 +39,7 @@
 				"childs":[
 					{
 						"fieldtype":"firstname",
-						"width":"",
+						"width":200,
 						"queryColumnType":"varchar",
 						"columnType":"varchar",
 						"columnLength":255,
@@ -62,7 +62,7 @@
 					},
 					{
 						"fieldtype":"lastname",
-						"width":"",
+						"width":200,
 						"queryColumnType":"varchar",
 						"columnType":"varchar",
 						"columnLength":255,
@@ -85,7 +85,7 @@
 					},
 					{
 						"fieldtype":"email",
-						"width":"",
+						"width":200,
 						"queryColumnType":"varchar",
 						"columnType":"varchar",
 						"columnLength":255,
@@ -108,7 +108,7 @@
 					},
 					{
 						"fieldtype":"password",
-						"width":"",
+						"width":200,
 						"queryColumnType":"varchar(255)",
 						"columnType":"varchar(255)",
 						"phpdocType":"string",
@@ -164,7 +164,7 @@
 					},
 					{
 						"fieldtype":"input",
-						"width":"",
+						"width":200,
 						"queryColumnType":"varchar",
 						"columnType":"varchar",
 						"columnLength":255,
@@ -176,12 +176,35 @@
 						"mandatory":false,
 						"noteditable":true,
 						"index":true,
+						"locked":false,
+						"style":"",
+						"permissions":null,
+						"datatype":"data",
+						"relationType":false,
+						"invisible":false,
+						"visibleGridView":false,
+						"visibleSearch":false
+					},
+					{
+						"fieldtype":"input",
+						"width":200,
+						"queryColumnType":"varchar",
+						"columnType":"varchar",
+						"columnLength":255,
+						"phpdocType":"string",
+						"regex":"",
+						"name":"resetHash",
+						"title":"Password reset hash",
+						"tooltip":"",
+						"mandatory":false,
+						"noteditable":true,
+						"index":false,
 						"locked":null,
 						"style":"",
 						"permissions":null,
 						"datatype":"data",
 						"relationType":false,
-						"invisible":true,
+						"invisible":false,
 						"visibleGridView":false,
 						"visibleSearch":false
 					}
