@@ -49,7 +49,7 @@ class Member_AuthController extends Action
         $this->redirect(Config::get('routes')->login);
     }
 
-    public function remindAction()
+    public function passwordRequestAction()
     {
         if ($this->_helper->member()) {
             $this->redirect(Config::get('routes')->profile);
