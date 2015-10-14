@@ -85,7 +85,7 @@
                 </div>
                 <div class="col-sm-6">
                     <p class="forgot-pwd">
-                        <a href="<?= \Member\Plugin\Config::get('routes')->passwordRemind ?>">
+                        <a href="<?= \Member\Plugin\Config::get('routes')->passwordRequest ?>">
                             <?= $this->translate('Forgot password?') ?>
                         </a>
                     </p>

@@ -7,3 +7,6 @@
 "member_register_success_confirm","You account was created successfully. Check your email and confirm your account by clicking activation link."
 "member_confirm_link_invalid","Invalid confirmation link."
 "member_confirm_success","Your account is now active, you can login using email and password."
+"member_remind_email_invalid","Provide valid email address."
+"member_remind_email_not_exist","User with given email not exist."
+"member_remind_success","Password reset confirmation was sent to given email address."

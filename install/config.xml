@@ -13,10 +13,11 @@
         <register>/member/register</register>
         <profile>/member</profile>
         <confirm>/member/confirm</confirm>
-        <passwordRemind>/member/password-remind</passwordRemind>
+        <passwordRequest>/member/password-request</passwordRequest>
     </routes>
     <emails>
         <registerConfirm>/member/emails/register-confirm</registerConfirm>
+        <passwordReset>/member/emails/password-reset</passwordReset>
     </emails>
     <actions>
         <postRegister>activate</postRegister>

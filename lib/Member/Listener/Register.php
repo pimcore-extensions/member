@@ -60,7 +60,7 @@ class Register
 
     /**
      * Callback for 'member.register.post' event.
-     * It simply activates member account after registration.
+     * Activates member account after registration.
      *
      * @param \Zend_EventManager_Event $event
      * @return \Member
@@ -76,6 +76,14 @@ class Register
         return $member;
     }
 
+    /**
+     * Callback for 'member.register.post' event.
+     * Sending email with confirmation links.
+     *
+     * @param \Zend_EventManager_Event $event
+     * @return \Member
+     * @throws \Exception
+     */
     public static function confirm(\Zend_EventManager_Event $event)
     {
         /** @var \Member $member */

@@ -9,7 +9,7 @@ class Member_AuthController extends Action
 {
     public function loginAction()
     {
-        if ($this->auth->hasIdentity()) {
+        if ($this->_helper->member()) {
             $this->redirect(Config::get('routes')->profile);
         }
 
@@ -51,5 +51,33 @@ class Member_AuthController extends Action
 
     public function remindAction()
     {
+        if ($this->_helper->member()) {
+            $this->redirect(Config::get('routes')->profile);
+        }
+
+        if ($this->_request->isPost()) {
+            $email = trim($this->_request->getPost('email'));
+
+            if (!\Zend_Validate::is($email, 'EmailAddress')) {
+                $this->view->error = $this->translate->_('member_remind_email_invalid');
+                return;
+            }
+
+            $list = \Member::getByEmail($email);
+            if (count($list) == 0) {
+                $this->view->error = $this->translate->_('member_remind_email_not_exist');
+                return;
+            }
+
+            /** @var \Member $member */
+            $member = $list->current();
+            $member->requestPasswordReset();
+
+            $this->_helper->flashMessenger([
+                'type' => 'success',
+                'text' => $this->translate->_('member_remind_success'),
+            ]);
+            $this->redirect(Config::get('routes')->login);
+        }
     }
 }

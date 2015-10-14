@@ -36,8 +36,8 @@ Fork, hack & have fun! **Pull requests are more than welcome!** :)
 
 ### Event API
 
-Events can be used to hook into many functionalities. How to attach listeners you can find in
-[pimcore documentation](https://www.pimcore.org/wiki/pages/viewpage.action?pageId=14551652).
+Events can be used to hook into many functionalities. For more information about using Event API
+please check [pimcore documentation](https://www.pimcore.org/wiki/pages/viewpage.action?pageId=14551652).
 
 * ```member.register.validate``` - allows to override validation of register form data.  
     Your callback must return configured instance of ```\Zend_Filter_Input```.  

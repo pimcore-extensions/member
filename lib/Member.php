@@ -1,6 +1,8 @@
 <?php
 
 use Member\Plugin\Config;
+use Pimcore\Mail;
+use Pimcore\Model\Document\Email;
 use Pimcore\Model\Object\Folder;
 use Pimcore\Model\Object\Member as AbstractMember;
 
@@ -61,6 +63,27 @@ class Member extends AbstractMember
         $this->setPublished(true);
         $this->setConfirmHash(null);
         $this->save();
+
+        return $this;
+    }
+
+    public function requestPasswordReset()
+    {
+        $this->setRemindHash($this->createHash());
+        $this->save();
+
+        $doc = Email::getByPath(Config::get('emails')->passwordReset);
+        if (!$doc) {
+            throw new \Exception('No password reset email defined');
+        }
+
+        $email = new Mail();
+        $email->addTo($this->getEmail());
+        $email->setDocument($doc);
+        $email->setParams([
+            'member_id' => $this->getId(),
+        ]);
+        $email->send();
 
         return $this;
     }
