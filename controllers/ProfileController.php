@@ -26,7 +26,11 @@ class Member_ProfileController extends Action
             $result = $member->register($post);
 
             if ($result->isValid()) {
-                // TODO flash message to the user
+                $translationKey = 'member_register_success';
+                if (Config::get('actions')->postRegister) {
+                    $translationKey .= '_' . Config::get('actions')->postRegister;
+                }
+                $this->_helper->flashMessenger($this->translate->_($translationKey));
                 $this->redirect(Config::get('routes')->login);
             }
 

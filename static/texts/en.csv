@@ -2,3 +2,6 @@
 "plugin_member_install_failed","Could not install Member plugin. See log for more details."
 "plugin_member_uninstall_successful","Successfully uninstalled Member plugin."
 "plugin_member_uninstall_failed","Could not uninstall Blog plugin. See log for more details."
+"member_register_success","You account was created successfully and must be activated by site stuff."
+"member_register_success_activate","You account was created successfully. You can login with your email and password."
+"member_register_success_confirm","You account was created successfully. Check your email and confirm your account by clicking activation link."

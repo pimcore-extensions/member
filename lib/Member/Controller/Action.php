@@ -36,6 +36,10 @@ class Action extends WebsiteAction
         );
 
         $this->auth = \Zend_Auth::getInstance();
+
+        // TODO provide plugin translations to frontend
         $this->translate = $this->initTranslation();
+
+        $this->view->flashMessages = $this->_helper->flashMessenger->getMessages();
     }
 }
