@@ -42,6 +42,7 @@ class Register
             ],
             'password' => [
                 new \Zend_Validate_StringLength(6),
+                'PasswordStrength',
                 'presence' => 'required',
             ],
             'password_confirm' => [
