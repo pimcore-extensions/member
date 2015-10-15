@@ -1,4 +1,5 @@
 "login","Login"
+"logout","Logout"
 "or","or"
 "sign_up","Sign up"
 "email","Email"
@@ -27,3 +28,6 @@
 "member_password_request_success","Password reset confirmation was sent to given email address."
 "member_password_reset_link_invalid","Invalid password reset link."
 "member_password_reset_success","Your password has been successfully changed."
+"do_you_have_an_account?","Do you have an account?"
+"not_a_member_yet?","Not a member yet?"
+"you_are_logged_in_as","You are logged in as"

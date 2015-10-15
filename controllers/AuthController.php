@@ -126,4 +126,11 @@ class Member_AuthController extends Action
             $this->view->errors = $result->getMessages();
         }
     }
+
+    public function snippetAction()
+    {
+        if ($this->editmode) {
+            $this->disableLayout();
+        }
+    }
 }
