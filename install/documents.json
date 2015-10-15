@@ -1,0 +1,79 @@
+[{
+  "type": "page",
+  "parent": "/",
+  "key": "member",
+  "name": "Member",
+  "title": "Member profile",
+  "module": "Member",
+  "controller": "profile",
+  "action": "default"
+}, {
+  "type": "page",
+  "parent": "/member",
+  "key": "login",
+  "name": "Login",
+  "title": "Member login",
+  "module": "Member",
+  "controller": "auth",
+  "action": "login"
+}, {
+  "type": "page",
+  "parent": "/member",
+  "key": "logout",
+  "name": "Logout",
+  "module": "Member",
+  "controller": "auth",
+  "action": "logout"
+}, {
+  "type": "page",
+  "parent": "/member",
+  "key": "register",
+  "name": "Register",
+  "module": "Member",
+  "controller": "profile",
+  "action": "register"
+}, {
+  "type": "page",
+  "parent": "/member",
+  "key": "confirm",
+  "name": "Confirm account",
+  "module": "Member",
+  "controller": "profile",
+  "action": "confirm"
+}, {
+  "type": "page",
+  "parent": "/member",
+  "key": "password-request",
+  "name": "Reset password",
+  "module": "Member",
+  "controller": "auth",
+  "action": "password-request"
+}, {
+  "type": "page",
+  "parent": "/member",
+  "key": "password-reset",
+  "name": "Set new password",
+  "module": "Member",
+  "controller": "auth",
+  "action": "password-reset"
+}, {
+  "type": "folder",
+  "parent": "/member",
+  "key": "emails"
+}, {
+  "type": "email",
+  "parent": "/member/emails",
+  "key": "register-confirm",
+  "subject": "Activate your account",
+  "module": "Member",
+  "controller": "default",
+  "action": "email"
+}, {
+  "type": "email",
+  "parent": "/member/emails",
+  "key": "password-reset",
+  "subject": "Password reset request",
+  "module": "Member",
+  "controller": "default",
+  "action": "email"
+}]

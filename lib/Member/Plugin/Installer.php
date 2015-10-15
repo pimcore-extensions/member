@@ -2,6 +2,8 @@
 
 namespace Member\Plugin;
 
+use Pimcore\File;
+use Pimcore\Model\Document;
 use Pimcore\Model\Object\AbstractObject;
 use Pimcore\Model\Object\ClassDefinition;
 use Pimcore\Model\Object\Folder;
@@ -65,19 +67,60 @@ class Installer
         }
     }
 
+    public function importDocuments()
+    {
+        $file = sprintf('%s/documents.json', $this->baseDir);
+        $docs = new \Zend_Config_Json($file);
+
+        foreach ($docs as $def) {
+            $def = $def->toArray();
+
+            $parent = Document::getByPath($def['parent']);
+            unset($def['parent']);
+            if (!$parent) {
+                $parent = Document::getById(1);
+            }
+
+            $path = $parent->getFullPath() . '/' . $def['key'];
+            if (Document\Service::pathExists($path)) {
+                $doc = Document::getByPath($path);
+            } else {
+                $docClass = '\\Pimcore\\Model\\Document\\' . ucfirst($def['type']);
+                /** @var Document $doc */
+                $doc = $docClass::create($parent->getId(), $def, false);
+                $doc->setUserOwner(self::getUser()->getId());
+                $doc->setUserModification(self::getUser()->getId());
+            }
+            $doc->setValues($def);
+            $doc->setPublished(true);
+            $doc->save();
+        }
+    }
+
+    public function removeDocuments()
+    {
+        $file = sprintf('%s/documents.json', $this->baseDir);
+        $docs = new \Zend_Config_Json($file);
+        $root = reset($docs->toArray());
+        $doc = Document::getByPath('/' . ltrim($root['parent'] . '/' . $root['key'], '/'));
+        if ($doc) {
+            $doc->delete();
+        }
+    }
+
     /**
      * @param string $key
-     * @param AbstractObject|null $root
+     * @param AbstractObject|null $parent
      * @return Folder
      */
-    public function createObjectFolder($key, $root = null)
+    public function createObjectFolder($key, $parent = null)
     {
-        if ($root instanceof AbstractObject) {
-            $root = $root->getId();
+        if ($parent instanceof AbstractObject) {
+            $parent = $parent->getId();
         }
 
         $folder = Folder::create(array(
-            'o_parentId' => ($root !== null) ? $root : 1,
+            'o_parentId' => ($parent !== null) ? $parent : 1,
             'o_creationDate' => time(),
             'o_userOwner' => $this->getUser()->getId(),
             'o_userModification' => $this->getUser()->getId(),

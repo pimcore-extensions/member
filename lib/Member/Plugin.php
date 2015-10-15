@@ -45,14 +45,16 @@ class Plugin extends PluginLib\AbstractPlugin implements PluginLib\PluginInterfa
 
             $installer->createConfig('member');
             $installer->createObjectFolder('members');
+            $installer->importDocuments();
+            $installer->importTranslations();
             $installer->createClass('Member');
             $installer->addClassmap('Object_Member', '\\Member');
-            $installer->importTranslations();
 
         } catch (\Exception $e) {
             \Logger::crit($e);
             self::uninstall(); // revert installation
-            return self::getTranslate()->_('plugin_member_install_failed');
+            return sprintf(self::getTranslate()->_('plugin_member_install_failed'),
+                $e->getMessage());
         }
 
         return self::getTranslate()->_('plugin_member_install_successful');
@@ -64,13 +66,15 @@ class Plugin extends PluginLib\AbstractPlugin implements PluginLib\PluginInterfa
             $installer = new Installer(PIMCORE_PLUGINS_PATH . '/Member/install');
 
             $installer->removeObjectFolder('/members');
-            $installer->removeClass('Member');
             $installer->removeClassmap('Object_Member');
             $installer->removeConfig('member');
+            $installer->removeDocuments();
+            $installer->removeClass('Member');
 
         } catch (\Exception $e) {
             \Logger::crit($e);
-            return self::getTranslate()->_('plugin_member_uninstall_failed');
+            return sprintf(self::getTranslate()->_('plugin_member_uninstall_failed'),
+                $e->getMessage());
         }
 
         return self::getTranslate()->_('plugin_member_uninstall_successful');
