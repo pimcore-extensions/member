@@ -25,3 +25,4 @@
 "member_password_request_email_not_exist","User with given email not exist."
 "member_password_request_success","Password reset confirmation was sent to given email address."
 "member_password_reset_link_invalid","Invalid password reset link."
+"member_password_reset_success","Your password has been successfully changed."

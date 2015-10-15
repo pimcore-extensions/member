@@ -87,4 +87,32 @@ class Member extends AbstractMember
 
         return $this;
     }
+
+    public function resetPassword(array $data)
+    {
+        $argv = compact('data');
+        $results = \Pimcore::getEventManager()->triggerUntil('member.password.reset',
+            $this, $argv, function ($v) {
+                return ($v instanceof \Zend_Filter_Input);
+            });
+
+        $input = $results->last();
+        if (!$input instanceof \Zend_Filter_Input) {
+            throw new \Exception('No validate listener attached to "member.password.reset" event');
+        }
+
+        if (!$input->isValid()) {
+            return $input;
+        }
+
+        $this->setPassword($input->getUnescaped('password'));
+        $this->setResetHash(null);
+
+        if (!$this->isPublished()) {
+            // password reset is confirmed by email so we can activate account as well
+            $this->confirm();
+        }
+
+        return $input;
+    }
 }

@@ -47,4 +47,7 @@ please check [pimcore documentation](https://www.pimcore.org/wiki/pages/viewpage
     is able to login.  
     There is also ```confirm``` callback implemented which sends confirmation link via email.  
     If you remove ```postRegister``` action from ```config.xml``` members must be activated by admin.
+* ```member.password.reset``` - allows to override validation of password reset form data.  
+    Your callback must return configured instance of ```\Zend_Filter_Input```.  
+    See ```\Member\Listener\Password::reset()``` for default implementation.
     

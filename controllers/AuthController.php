@@ -85,6 +85,10 @@ class Member_AuthController extends Action
 
     public function passwordResetAction()
     {
+        if ($this->_helper->member()) {
+            $this->redirect(Config::get('routes')->profile);
+        }
+
         $hash = trim($this->_getParam('hash'));
         if (empty($hash)) {
             $this->_helper->flashMessenger([
@@ -92,6 +96,34 @@ class Member_AuthController extends Action
                 'text' => $this->translate->_('member_password_reset_link_invalid'),
             ]);
             $this->redirect(Config::get('routes')->login);
+        }
+
+        $list = new Member\Listing();
+        $list->setUnpublished(true);
+        $list->setCondition('resetHash = ?', $hash);
+        if (count($list) == 0) {
+            $this->_helper->flashMessenger([
+                'type' => 'danger',
+                'text' => $this->translate->_('member_password_reset_link_invalid')
+            ]);
+            $this->redirect(Config::get('routes')->login);
+        }
+
+        if ($this->_request->isPost()) {
+            $post = $this->_request->getPost();
+            /** @var \Member $member */
+            $member = $list->current();
+            $result = $member->resetPassword($post);
+
+            if ($result->isValid()) {
+                $this->_helper->flashMessenger([
+                    'type' => 'success',
+                    'text' => $this->translate->_('member_password_reset_success')
+                ]);
+                $this->redirect(Config::get('routes')->login);
+            }
+
+            $this->view->errors = $result->getMessages();
         }
     }
 }

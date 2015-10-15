@@ -23,6 +23,8 @@ class Plugin extends PluginLib\AbstractPlugin implements PluginLib\PluginInterfa
         // attach default listeners
         \Pimcore::getEventManager()->attach('member.register.validate',
             ['\\Member\\Listener\\Register', 'validate'], 0);
+        \Pimcore::getEventManager()->attach('member.password.reset',
+            ['\\Member\\Listener\\Password', 'reset'], 0);
 
         if (Config::get('actions')->postRegister) {
             \Pimcore::getEventManager()->attach('member.register.post',
