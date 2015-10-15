@@ -64,8 +64,6 @@ class PasswordStrength extends \Zend_Validate_Abstract
         if (array_key_exists('specialCharacter', $options)) {
             $this->setSpecialCharacter($options['specialCharacter']);
         }
-
-        var_dump($this);
     }
 
     /**
