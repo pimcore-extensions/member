@@ -13,7 +13,8 @@
             <?php endif; ?>
 
             <h2 class="text-center">
-                <?= $this->translate('Request password reset') ?>
+                <?= $this->translate('reset_your_password') ?><br>
+                <small><?= $this->translate('get_new_password_by_filling_form') ?></small>
             </h2>
 
             <form action="<?= $this->request->getRequestUri() ?>" method="post">
@@ -21,7 +22,7 @@
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-fw fa-user"></i></span>
                         <input type="email" class="form-control input-lg" name="email"
-                               placeholder="<?= $this->translate('Email') ?>">
+                               placeholder="<?= $this->translate('email') ?>">
                     </div>
                 </div>
                 <div class="form-group <?= $this->error ? 'has-error' : '' ?>">
@@ -29,7 +30,7 @@
                 </div>
 
                 <button class="btn btn-lg btn-primary btn-block" type="submit">
-                    <?= $this->translate('Submit') ?>
+                    <?= $this->translate('reset_password') ?>
                 </button>
             </form>
         </div>

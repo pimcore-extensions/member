@@ -5,7 +5,9 @@ namespace Member\Plugin;
 use Pimcore\Model\Object\AbstractObject;
 use Pimcore\Model\Object\ClassDefinition;
 use Pimcore\Model\Object\Folder;
+use Pimcore\Model\Translation;
 use Pimcore\Model\User;
+use Pimcore\Tool;
 
 class Installer
 {
@@ -150,6 +152,22 @@ class Installer
         $dest = PIMCORE_WEBSITE_VAR . '/plugins/' . $name . '/config.xml';
         @unlink($dest);
         @rmdir(basename($dest));
+    }
+
+    public function importTranslations()
+    {
+        foreach (Tool::getValidLanguages() as $lang) {
+            $src = sprintf('%s/i18n/%s.csv', $this->baseDir, $lang);
+            $csv = new \Csv_Reader($src, new \Csv_Dialect([
+                'delimiter' => ',',
+                'quotechar' => '"',
+            ]));
+            foreach ($csv as $row) {
+                $t = Translation\Website::getByKey($row[0], true);
+                $t->addTranslation($lang, $row[1]);
+                $t->save();
+            }
+        }
     }
 
     /**

@@ -47,6 +47,7 @@ class Plugin extends PluginLib\AbstractPlugin implements PluginLib\PluginInterfa
             $installer->createObjectFolder('members');
             $installer->createClass('Member');
             $installer->addClassmap('Object_Member', '\\Member');
+            $installer->importTranslations();
 
         } catch (\Exception $e) {
             \Logger::crit($e);

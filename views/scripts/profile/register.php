@@ -5,10 +5,10 @@
         <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
 
             <h2 class="text-center">
-                <?= $this->translate('Sign up') ?>
+                <?= $this->translate('sign_up') ?>
                 <?= $this->translate('or') ?>
                 <a href="<?= \Member\Plugin\Config::get('routes')->login ?>">
-                    <?= $this->translate('Login') ?>
+                    <?= $this->translate('login') ?>
                 </a>
             </h2>
 
@@ -44,7 +44,7 @@
                         <div class="form-group <?= isset($this->errors['firstname']) ? 'has-error' : '' ?>">
                             <input type="text" name="firstname" id="firstname"
                                    class="form-control input-lg" tabindex="1"
-                                   placeholder="<?= $this->translate('First Name') ?>"
+                                   placeholder="<?= $this->translate('first_name') ?>"
                                    value="<?= $this->firstname ?>">
                             <div class="help-block">
                                 <?= @reset($this->errors['firstname']) ?>
@@ -55,7 +55,7 @@
                         <div class="form-group <?= isset($this->errors['lastname']) ? 'has-error' : '' ?>">
                             <input type="text" name="lastname" id="lastname"
                                    class="form-control input-lg" tabindex="2"
-                                   placeholder="<?= $this->translate('Last Name') ?>"
+                                   placeholder="<?= $this->translate('last_name') ?>"
                                    value="<?= $this->lastname ?>">
                             <div class="help-block">
                                 <?= @reset($this->errors['lastname']) ?>
@@ -66,7 +66,7 @@
                 <div class="form-group <?= isset($this->errors['email']) ? 'has-error' : '' ?>">
                     <input type="email" name="email" id="email"
                            class="form-control input-lg" tabindex="3"
-                           placeholder="<?= $this->translate('Email Address') ?>"
+                           placeholder="<?= $this->translate('email_address') ?>"
                            value="<?= $this->email ?>">
                     <div class="help-block">
                         <?= @reset($this->errors['email']) ?>
@@ -77,7 +77,7 @@
                         <div class="form-group <?= isset($this->errors['password']) ? 'has-error' : '' ?>">
                             <input type="password" name="password" id="password"
                                    class="form-control input-lg" tabindex="4"
-                                   placeholder="<?= $this->translate('Password') ?>">
+                                   placeholder="<?= $this->translate('password') ?>">
                             <div class="help-block">
                                 <?= @reset($this->errors['password']) ?>
                             </div>
@@ -87,7 +87,7 @@
                         <div class="form-group <?= isset($this->errors['password_confirm']) ? 'has-error' : '' ?>">
                             <input type="password" name="password_confirm" id="password_confirm"
                                    class="form-control input-lg" tabindex="5"
-                                   placeholder="<?= $this->translate('Confirm Password') ?>">
+                                   placeholder="<?= $this->translate('confirm_password') ?>">
                             <div class="help-block">
                                 <?= @reset($this->errors['password_confirm']) ?>
                             </div>
@@ -100,24 +100,21 @@
                             <label class="btn btn-default <?= isset($this->errors['agree']) ? 'btn-danger' : '' ?>" tabindex="6">
                                 <input type="checkbox" name="agree" id="agree" value="1"
                                     <?= $this->agree ? 'checked' : '' ?>>
-                                <?= $this->translate('I Agree') ?>
+                                <?= $this->translate('i_agree') ?>
                             </label>
                         </div>
                     </div>
                     <div class="col-xs-8 col-sm-9">
                         <div class="form-group <?= isset($this->errors['firstname']) ? 'has-error' : '' ?>">
-                            By clicking <strong class="label label-primary">Register</strong>,
-                            you agree to the
+                            <?= $this->translate('register_terms_agree') ?>
                             <a href="#" data-toggle="modal" data-target="#terms">
-                                Terms and Conditions
-                            </a>
-                            set out by this site, including our Cookie Use.
+                                <?= $this->translate('terms_and_conditions') ?></a>.
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary btn-block btn-lg">
-                        <?= $this->translate('Register') ?>
+                        <?= $this->translate('create_account') ?>
                     </button>
                 </div>
             </form>
@@ -132,7 +129,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×
                     </button>
                     <h4 class="modal-title" id="termsModalLabel">
-                        <?= $this->translate('Terms & Conditions') ?>
+                        <?= $this->input('terms_title') ?>
                     </h4>
                 </div>
                 <div class="modal-body">
@@ -140,7 +137,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-dismiss="modal">
-                        <?= $this->translate('I Agree') ?>
+                        <?= $this->translate('i_agree') ?>
                     </button>
                 </div>
             </div>
