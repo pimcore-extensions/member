@@ -107,6 +107,7 @@ class Member extends AbstractMember
 
         $this->setPassword($input->getUnescaped('password'));
         $this->setResetHash(null);
+        $this->save();
 
         if (!$this->isPublished()) {
             // password reset is confirmed by email so we can activate account as well
