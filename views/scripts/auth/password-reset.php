@@ -32,7 +32,7 @@
                         <div class="form-group <?= isset($this->errors['password_confirm']) ? 'has-error' : '' ?>">
                             <input type="password" name="password_confirm" id="password_confirm"
                                    class="form-control input-lg" tabindex="5"
-                                   placeholder="<?= $this->translate('password_confirm') ?>">
+                                   placeholder="<?= $this->translate('confirm_password') ?>">
                             <div class="help-block">
                                 <?= @reset($this->errors['password_confirm']) ?>
                             </div>
