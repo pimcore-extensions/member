@@ -1,15 +1,30 @@
 # Frontend user extension for [pimcore](http://www.pimcore.org/)
 
-**NOTE:** This extension is under development. **Most of the features are not working yet.**  
+**NOTE:** This extension is under development. **Some features are not working yet (see list below).**  
 If you need frontend user in your project you can give it a try. But don't expect to much for now ;)  
 Fork, hack & have fun! **Pull requests are more than welcome!** :)
 
-## Features
+## Roadmap
 
-* Member accounts based on pimcore's data objects
-* Base user functionality - register, login, logout, remind password
-* Highly customizable by config and event hooks
-* Social sign-in thanks to [HybridAuth](https://github.com/hybridauth/hybridauth)
+* ☑ Member accounts based on pimcore's data objects
+* ☑ Register account (activation modes: auto, email, admin)
+* ☑ Login (email/password), logout
+* ☑ Reset password (confirm via email)
+* ☑ Customizable and extensible flow by config and event hooks
+* ☐ Social sign-in thanks to [HybridAuth](https://github.com/hybridauth/hybridauth)
+* ☐ User roles
+* ☐ Profile edit, password change
+* ☐ Public member profile
+* ☐ Remember me
+* ☐ More docs
+* ☐ First stable release & publish to packagist
+
+### Some ideas for the future
+* Login error log and anti brute force protection
+* Registration only by invitation (invite by admin or active member)
+* OpenID/OAuth provider
+* Option to force password change after configured period
+* Alternative password strength validator inspired by http://xkcd.com/936/ :)
 
 ## Setup
 
