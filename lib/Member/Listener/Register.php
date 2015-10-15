@@ -97,10 +97,14 @@ class Register
             throw new \Exception('No confirmation email defined');
         }
 
+        /** @var \Zend_Controller_Request_Http $request */
+        $request = \Zend_Controller_Front::getInstance()->getRequest();
+
         $email = new Mail();
         $email->addTo($member->getEmail());
         $email->setDocument($doc);
         $email->setParams([
+            'host' => sprintf('%s://%s', $request->getScheme(), $request->getHttpHost()),
             'member_id' => $member->getId(),
         ]);
         $email->send();

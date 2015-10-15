@@ -66,3 +66,12 @@ please check [pimcore documentation](https://www.pimcore.org/wiki/pages/viewpage
     Your callback must return configured instance of ```\Zend_Filter_Input```.  
     See ```\Member\Listener\Password::reset()``` for default implementation.
     
+### Email templates
+
+Plugin installer will automatically create two email documents.
+You should add appropriate action links with
+[placeholders](https://www.pimcore.org/wiki/display/PIMCORE3/Placeholders) in content of those emails.
+* ```member/emails/register-confirm```
+    ```%Text(host);/member/confirm?hash=%Object(member_id,{"method": "getConfirmHash"});```
+* ```member/emails/password-reset```
+    ```%Text(host);/member/password-reset?hash=%Object(member_id,{"method": "getResetHash"});```
