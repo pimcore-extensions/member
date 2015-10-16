@@ -16,7 +16,6 @@
             <path>/plugins/Member/static/js/startup.js</path>
         </pluginJsPaths>
         <pluginCssPaths>
-            <path>/plugins/Member/static/css/example.css</path>
         </pluginCssPaths>
         <pluginXmlEditorFile>/website/var/plugins/member/config.xml</pluginXmlEditorFile>
     </plugin>
