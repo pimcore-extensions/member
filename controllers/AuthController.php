@@ -14,10 +14,17 @@ class Member_AuthController extends Action
         }
 
         if ($this->_request->isPost()) {
+            $identity = trim($this->_getParam('email'));
+            $password = $this->_getParam('password');
+            if (empty($identity) || empty($password)) {
+                $this->view->error = $this->translate->_('Wrong email or password');
+                return;
+            }
+
             $adapter = new Adapter(Config::get('auth')->adapter);
             $adapter
-                ->setIdentity($this->_getParam('email'))
-                ->setCredential($this->_getParam('password'));
+                ->setIdentity($identity)
+                ->setCredential($password);
 
             $result = $this->auth->authenticate($adapter);
 
