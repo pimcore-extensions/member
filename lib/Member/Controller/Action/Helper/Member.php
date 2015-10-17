@@ -7,11 +7,18 @@ use Member\Plugin\Config;
 class Member extends \Zend_Controller_Action_Helper_Abstract
 {
     /**
+     * @param bool $fromStorage
      * @return \Member|null
      */
-    public function direct()
+    public function direct($fromStorage = true)
     {
-        return \Zend_Auth::getInstance()->getIdentity();
+        $identity = \Zend_Auth::getInstance()->getIdentity();
+        if ($identity && !$fromStorage) {
+            // return real object instead of object cached in auth storage
+            $identity = \Member::getById($identity->getId());
+        }
+
+        return $identity;
     }
 
     /**
