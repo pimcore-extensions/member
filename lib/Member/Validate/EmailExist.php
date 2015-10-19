@@ -2,6 +2,7 @@
 
 namespace Member\Validate;
 
+use Pimcore\Model\Object\Member\Listing;
 use Zend_Validate_Exception;
 
 class EmailExist extends \Zend_Validate_Abstract
@@ -32,7 +33,10 @@ class EmailExist extends \Zend_Validate_Abstract
     {
         $this->_setValue($value);
 
-        $list = \Member::getByEmail($value);
+        /** @var Listing $list */
+        $list = new Listing();
+        $list->addConditionParam('email = ?', $value);
+        $list->setUnpublished(true);
         if ($list->count() > 0) {
             $this->_error(self::EMAIL_EXIST);
             return false;
