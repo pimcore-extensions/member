@@ -6,6 +6,7 @@
             <credentialColumn>password</credentialColumn>
             <objectPath>/members</objectPath>
         </adapter>
+        <adminMemberId></adminMemberId>
     </auth>
     <routes>
         <login>/member/login</login>

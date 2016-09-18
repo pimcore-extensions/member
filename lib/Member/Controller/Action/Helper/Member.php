@@ -27,7 +27,20 @@ class Member extends \Zend_Controller_Action_Helper_Abstract
      */
     public function requireAuth()
     {
-        if (!\Zend_Auth::getInstance()->hasIdentity()) {
+        $auth = \Zend_Auth::getInstance();
+        if ($auth->hasIdentity()) {
+            return;
+        }
+
+        // login default user for use in admin panel
+        if ($this->_actionController->editmode && Config::get('auth')->adminMemberId) {
+            $member = \Treasurer\Member::getById(Config::get('auth')->adminMemberId);
+            if ($member) {
+                $auth->getStorage()->write($member);
+            }
+        }
+
+        if (!$auth->hasIdentity()) {
             $this->getActionController()->redirect(sprintf('%s?back=%s',
                 Config::get('routes')->login,
                 urlencode($this->getRequest()->getRequestUri())
