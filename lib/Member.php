@@ -1,5 +1,6 @@
 <?php
 
+use Member\Auth\Adapter;
 use Member\Plugin\Config;
 use Pimcore\Mail;
 use Pimcore\Model\Document\Email;
@@ -48,6 +49,16 @@ class Member extends AbstractMember
         }
 
         return $input;
+    }
+
+    public static function login($identity, $password)
+    {
+        $adapter = new Adapter(Config::get('auth')->adapter);
+        $adapter
+            ->setIdentity($identity)
+            ->setCredential($password);
+
+        return \Zend_Auth::getInstance()->authenticate($adapter);
     }
 
     public function createHash($algo = 'md5')

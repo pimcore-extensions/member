@@ -21,12 +21,7 @@ class Member_AuthController extends Action
                 return;
             }
 
-            $adapter = new Adapter(Config::get('auth')->adapter);
-            $adapter
-                ->setIdentity($identity)
-                ->setCredential($password);
-
-            $result = $this->auth->authenticate($adapter);
+            $result = \Member::login($identity, $password);
 
             if ($result->isValid()) {
                 // TODO handle "remember me"
