@@ -1,3 +1,6 @@
+This plugin is not maintaned for a long time. You should try to use newer alternative, eg. [Dachcom Members Solution] (https://github.com/dachcom-digital/pimcore-members)
+If you still see it usefull and have any fixes, feel free to submit a pull request!
+
 # Frontend user extension for [pimcore](http://www.pimcore.org/)
 
 **NOTE:** This extension is under development. **Some features are not working yet (see list below).**  
